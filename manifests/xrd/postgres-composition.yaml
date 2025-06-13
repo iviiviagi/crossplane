@@ -8,6 +8,7 @@ spec:
   compositeTypeRef:
     apiVersion: demo.org/v1alpha1
     kind: XPostgreSQLInstance
+  mode: PatchAndTransform
   resources:
     - name: postgres-deployment
       base:
@@ -15,6 +16,7 @@ spec:
         kind: Deployment
         metadata:
           name: demo-postgres
+          #namespace: default
         spec:
           replicas: 1
           selector:
@@ -34,3 +36,7 @@ spec:
       patches:
         - fromFieldPath: "spec.parameters.replicas"
           toFieldPath: "spec.replicas"
+  readinessChecks:
+    - type: MatchString
+      fieldPath: "status.conditions[?(@.type==\"Available\")].status"
+      matchString: "True"
