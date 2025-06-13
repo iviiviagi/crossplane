@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/iviiviagi/crossplane.git
     targetRevision: HEAD
-    path: manifests
+    path: manifests/app
   destination:
     server: https://kubernetes.default.svc
     namespace: default
