@@ -1,0 +1,8 @@
+apiVersion: demo.org/v1alpha1
+kind: XPostgreSQLInstance
+metadata:
+  name: my-claim
+  namespace: default
+spec:
+  parameters:
+    replicas: 1

@@ -1,0 +1,36 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: postgres-composition
+  labels:
+    crossplane.io/xrd: xpostgresqlinstances.demo.org
+spec:
+  compositeTypeRef:
+    apiVersion: demo.org/v1alpha1
+    kind: XPostgreSQLInstance
+  resources:
+    - name: postgres-deployment
+      base:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: demo-postgres
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: demo-postgres
+          template:
+            metadata:
+              labels:
+                app: demo-postgres
+            spec:
+              containers:
+                - name: postgres
+                  image: postgres:14
+                  env:
+                    - name: POSTGRES_PASSWORD
+                      value: examplepass
+      patches:
+        - fromFieldPath: "spec.parameters.replicas"
+          toFieldPath: "spec.replicas"
