@@ -14,7 +14,7 @@ spec:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
-          name: demo-postgres
+          # Remove fixed name to avoid conflicts; Crossplane generates one
           namespace: default
         spec:
           replicas: 1
