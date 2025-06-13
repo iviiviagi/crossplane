@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.customizations.demo.org_XPostgreSQLInstance: |
+    health.lua = [[
+      hs = {}
+      if obj.status.conditions then
+        for i, c in ipairs(obj.status.conditions) do
+          if c.type == "Ready" then
+            if c.status == "True" then
+              hs.status = "Healthy"
+              hs.message = "Ready"
+            else
+              hs.status = "Degraded"
+              hs.message = c.message or "Not Ready"
+            end
+            return hs
+          end
+        end
+      end
+      hs.status = "Progressing"
+      hs.message = "Waiting for Ready condition"
+      return hs
+    ]]
