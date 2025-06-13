@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: hhttps://github.com/iviiviagi/crossplane.git
+    repoURL: https://github.com/iviiviagi/crossplane.git
     targetRevision: HEAD
     path: manifests
   destination:
